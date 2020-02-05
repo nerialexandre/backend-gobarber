@@ -1,4 +1,5 @@
 module.exports = {
+  // config da database
   dialect: 'postgres',
   host: 'localhost',
   username: 'postgres',
