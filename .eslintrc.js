@@ -4,8 +4,9 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb-base',
+    'airbnb-base', 'prettier',
   ],
+  plugins: ['prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -15,6 +16,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "prettier/prettier": "error",
     "class-methods-use-this": "off",
     // "linebreak-style": ["error", "windows"],
     "camelcase": "off",

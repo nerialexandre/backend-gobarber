@@ -7,12 +7,16 @@ import authConfig from '../../config/auth';
 class SessionController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      email: Yup.string().email().required(),
-      password: Yup.string().email().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      res.status(400).json({ error: 'Verifique se o formulario foi preenchido' });
+      res
+        .status(400)
+        .json({ error: 'Verifique se o formulario foi preenchido' });
     }
 
     const { email, password } = req.body;
@@ -25,7 +29,7 @@ class SessionController {
       return res.status(401).json({ error: 'Usuario nao encontrado' });
     }
     // verifica se a senha nao esta correta
-    if (!await (user.checkPassword(password))) {
+    if (!(await user.checkPassword(password))) {
       return res.status(401).json({ error: 'Senha invalida' });
     }
 
