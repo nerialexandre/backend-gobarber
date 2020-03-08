@@ -5,6 +5,7 @@ import User from '../models/User';
 
 class ScheduleController {
   async index(req, res) {
+    // certificar se o user é um provider
     const checkUserProvider = await User.findOne({
       where: { id: req.userId, provider: true },
     });
@@ -20,6 +21,8 @@ class ScheduleController {
         provider_id: req.userId,
         canceled_at: null,
         date: {
+          // Op.between vai buscar o intervalo entre duas datas
+          // startOfDay e endOfDay retornam o inicial e o final do dia que contém a data
           [Op.between]: [startOfDay(parsedDate), endOfDay(parsedDate)],
         },
       },

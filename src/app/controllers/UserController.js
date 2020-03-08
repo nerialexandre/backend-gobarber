@@ -16,7 +16,7 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      res
+      return res
         .status(400)
         .json({ error: 'Verifique se o formulario foi preenchido' });
     }
@@ -24,7 +24,7 @@ class UserController {
     // verifica se ja existe usuario cadastrado com o mesmo email
     const userExist = await User.findOne({ where: { email: req.body.email } });
     if (userExist) {
-      res.status(400).json({ error: 'Email já cadastrado' });
+      return res.status(400).json({ error: 'Email já cadastrado' });
     }
 
     // recebe os dados do usuario e os armazena
@@ -56,7 +56,7 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      res
+      return res
         .status(400)
         .json({ error: 'Verifique se o formulario foi preenchido' });
     }
@@ -67,7 +67,7 @@ class UserController {
     if (email && email && email !== user.email) {
       const userExist = await User.findOne({ where: { email } });
       if (userExist) {
-        res.status(400).json({ error: 'Email já cadastrado' });
+        return res.status(400).json({ error: 'Email já cadastrado' });
       }
     }
 

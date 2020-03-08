@@ -1,3 +1,4 @@
+// campo de avatar_id para tabela de usuários relacionado com a coluna id da tabela files
 module.exports = {
   up: (queryInterface, Sequelize) => {
     queryInterface.addColumn('users', 'avatar_id', {

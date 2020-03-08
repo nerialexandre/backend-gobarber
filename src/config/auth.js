@@ -1,5 +1,5 @@
 export default {
   // informacoes para a geracao/autenticacao do token no SessionController
-  secret: '9e39914ee4cc489fa0a2abea917a1172',
+  secret: process.env.APP_SECRET,
   expiresIn: '7d',
 };

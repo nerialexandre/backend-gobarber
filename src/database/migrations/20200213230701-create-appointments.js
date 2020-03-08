@@ -11,6 +11,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+      // cria um relacionamento com a tabela users buscando o id do usuario e preenchendo o campo user_id e provider_id
       user_id: {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },

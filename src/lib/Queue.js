@@ -10,6 +10,7 @@ class Queue {
     this.init();
   }
 
+  // conecta com banco redis
   init() {
     jobs.forEach(({ key, handle }) => {
       this.queues[key] = {
@@ -21,17 +22,22 @@ class Queue {
     });
   }
 
+  // add jobs a fila
   add(queue, job) {
     return this.queues[queue].bee.createJob(job).save();
   }
 
+  // processa os jobs
   processQueue() {
     jobs.forEach(job => {
+      // busca o bee e o handle relacionado com o job
       const { bee, handle } = this.queues[job.key];
+      // .on escuta o processo e chama um metodo no caso de falha
       bee.on('failed', this.handleFailure).process(handle);
     });
   }
 
+  // metodo para mostrar a falha
   handleFailure(job, err) {
     console.log(`Queue ${job.queue.name}: FAILED`, err);
   }

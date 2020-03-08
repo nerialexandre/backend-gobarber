@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// schema das notificaçoes no mongoDB
 const NotificationSchema = new mongoose.Schema(
   {
     content: {

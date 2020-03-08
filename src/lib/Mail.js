@@ -8,6 +8,7 @@ class Mail {
   constructor() {
     const { host, port, secure, auth } = mailConfig;
 
+    // transporter é como o nodemaler chama uma conexao com servico externo de email
     this.transporter = nodemailer.createTransport({
       host,
       port,
@@ -35,6 +36,7 @@ class Mail {
     );
   }
 
+  // metodo para envio do email
   sendMail(message) {
     return this.transporter.sendMail({
       ...mailConfig.default,

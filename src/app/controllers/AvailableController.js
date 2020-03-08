@@ -18,6 +18,7 @@ class AvailableController {
       return res.status(400).json({ error: 'invalid date' });
     }
 
+    // passa a data para o formato de numero inteiro
     const searchDate = Number(date);
 
     const appointments = await Appointments.findAll({
@@ -25,6 +26,7 @@ class AvailableController {
         provider_id: req.params.providerId,
         canceled_at: null,
         date: {
+          // filtra os agendamentos entre o inicio e o fim do dia passado no seachDate
           [Op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
         },
       },
@@ -43,12 +45,10 @@ class AvailableController {
       '16:00',
       '17:00',
       '18:00',
-      '19:00',
       '20:00',
       '21:00',
       '22:00',
       '23:00',
-      '23:59',
     ];
 
     const available = schedule.map(time => {
@@ -58,16 +58,21 @@ class AvailableController {
         0
       );
 
+      console.log(format(value, "yyy-MM-dd'T'HH:mm:ssxxx"));
+      console.log(new Date());
+      console.log(new Date());
+
       return {
         time,
         value: format(value, "yyy-MM-dd'T'HH:mm:ssxxx"),
 
-        // informa se o horario é depois do horario atual, e se ja existe appointment marcado com aquele mesmo horario
+        // informa se o horarios do schedule é depois do horario atual, e se ja existe appointment marcado com aquele mesmo horario
         available:
           isAfter(value, new Date()) &&
           !appointments.find(a => format(a.date, 'HH:mm') === time),
       };
     });
+
     return res.json(available);
   }
 }
